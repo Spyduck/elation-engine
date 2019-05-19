@@ -834,7 +834,6 @@ THREE.Pass.FullScreenQuad = ( function () {
 	Object.assign( FullScreenQuad.prototype, {
 
 		render: function ( renderer ) {
-
 			renderer.render( this._mesh, camera );
 
 		}
@@ -1359,7 +1358,6 @@ THREE.UnrealBloomPass.prototype = Object.assign( Object.create( THREE.Pass.proto
 		}
 
 		// Restore renderer settings
-
 		renderer.setClearColor( this.oldClearColor, this.oldClearAlpha );
 		renderer.autoClear = oldAutoClear;
 
