@@ -650,11 +650,16 @@ THREE.Pass.FullScreenQuad = ( function () {
 
 	var camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
 	var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
-
-	var FullScreenQuad = function ( material ) {
-
+	
+	var FullScreenQuad = function ( material, scene, my_camera ) {
+		if (my_camera) {
+			camera = my_camera
+		}
 		this._mesh = new THREE.Mesh( geometry, material );
-
+		this._mesh.frustumCulled = false; // Avoid getting clipped		
+		if (scene) {
+			scene.add( this._mesh );
+		}
 	};
 
 	Object.defineProperty( FullScreenQuad.prototype, 'material', {
@@ -786,11 +791,11 @@ THREE.ShaderPass = function ( shader, textureID ) {
 		
 	this.camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
 	this.scene = new THREE.Scene();		
-	this.quad = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), null );		
-	this.quad.frustumCulled = false; // Avoid getting clipped		
-	this.scene.add( this.quad );		
+	//this.quad = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), null );		
+	//this.quad.frustumCulled = false; // Avoid getting clipped		
+	//this.scene.add( this.quad );		
 
-	this.fsQuad = new THREE.Pass.FullScreenQuad( this.material );
+	this.fsQuad = new THREE.Pass.FullScreenQuad( this.material, this.scene, this.camera );
 };
 
 THREE.ShaderPass.prototype = Object.assign( Object.create( THREE.Pass.prototype ), {
@@ -1069,7 +1074,7 @@ THREE.UnrealBloomPass = function ( resolution, strength, radius, threshold ) {
 
 	this.basic = new THREE.MeshBasicMaterial();
 
-	this.fsQuad = new THREE.Pass.FullScreenQuad( null );
+	this.fsQuad = new THREE.Pass.FullScreenQuad( null, null, null );
 
 };
 
