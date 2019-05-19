@@ -454,6 +454,7 @@ elation.require([
         case 'bloom':
           //pass = new THREE.BloomPass(0.4, 25, 5);
 		  pass = new THREE.UnrealBloomPass(new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+          pass.clear = true;
           break;
         case 'fxaa':
           pass = new THREE.ShaderPass( THREE.FXAAShader );
